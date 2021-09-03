@@ -1,7 +1,7 @@
 # Coding Challenge Senior Backend Developer
 ## 3. Write an application for an analytics of cryptocurrency exchange rate. Your application must get from any market exchange rate for pairs:
 
-# Stack
+## Stack
 1. Golang
 2. gRPC
 3. MySQL
@@ -12,8 +12,9 @@
 1. Exchange
 2. Analytics
 
-Build the services with `docker-composer build`
-Run the services with `docker-composer up`
+### Running Services:
+* Build the services with `docker-composer build`
+* Run the services with `docker-composer up`
 
 ## Exchange Service 
 * Handles the core business logic.
@@ -29,7 +30,7 @@ The API documentation can be found [HERE](http://127.0.0.1:50052/docs) after run
 
 ## Curl Example
 ```
-# CURL
+## CURL
 '127.0.0.1:50052/export/analytics?from=2020-11-01T00%3A01%3A00&to=2020-12-01T23%3A59%3A00&format=json' \
 ```
 
