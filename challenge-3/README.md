@@ -25,7 +25,7 @@ Run the services with `docker-composer up`
 * Handles API calls and exposes endpoint for users to retrieve data
 
 ## API Doc:
-The API documentation can be found [HERE](127.0.0.1:50052/docs) after running the services above
+The API documentation can be found [HERE](http://127.0.0.1:50052/docs) after running the services above
 
 ## Curl Example
 ```
