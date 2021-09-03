@@ -1,0 +1,50 @@
+version: '3.5'
+
+services:
+
+    # Services
+    exchange:
+        restart: always
+        container_name: exchangeService
+        build: ./exchange
+        depends_on:
+            - database
+        links:
+            - database
+        ports:
+            - 50051:50051
+        environment:
+            SERVER_ADDRESS: ":50051"
+            NUMBER_MARKET: 2
+            DB_HOST: "database"
+            DB_USER: "root"
+            DB_PASS: "password"
+            DB_NAME: "exchange-analytics"
+            DB_PORT: "3308"
+   
+    # Service
+    analytics:
+        restart: always
+        container_name: analyticsService
+        build: ./analytics
+        environment: 
+            EXCHANGE_HOST: "exchangeService:50051"
+            PORT: "50052"
+           # GRPC_GO_LOG_VERBOSITY_LEVEL: "99" 
+           # GRPC_GO_LOG_SEVERITY_LEVEL: "info"
+        ports:
+            - 50052:50052
+   
+    database:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: "password"
+            MYSQL_TCP_PORT: "3308"
+            MYSQL_PASSWORD: "password"
+            MYSQL_DATABASE: "exchange-analytics"
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            timeout: 20s
+            retries: 10
+        ports:
+            - 3308:3306
