@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+option go_package="github.com/ebikode/peaq-challenge/challenge-3/exchange/proto/rate;rate";
+package rate;
+
+
+
+service RateService {
+    // GetGrowthRecords Fetch Processed Growth Records
+    rpc GetGrowthRecords(GetRequest) returns (Response);
+    // GetRawGrowthRecords Fetch Raw Growth Records
+    rpc GetRawGrowthRecords(GetRequest) returns (RawResponse);
+}
+
+message Rate {
+    int32 id = 1;
+    string market_name = 2;
+    string high = 3;
+    string low = 4;
+    string volume = 5;
+    string timestamp = 6;
+}
+
+message GrowthRecord {
+    int32 id = 1;
+    int32 from_rate_id = 2;
+    int32 to_rate_id = 3;
+    string volume_growth = 4;
+    string high_growth = 5;
+    string low_growth = 6;
+    int64 from = 7;
+    int64 to = 8;
+    Rate from_rate = 9;
+    Rate to_rate = 10;
+}
+
+message GrowthData {
+    string volume_growth = 1;
+    string high_growth = 2;
+    string low_growth = 3;
+}
+
+message GetRequest {
+    int64 from_timestamp = 1;
+    int64 to_timestamp = 2;
+}
+
+message Response {
+    bool status = 1;
+    string message = 2;
+    repeated ResponseData results = 3;
+}
+
+message RawResponse {
+    bool status = 1;
+    string message = 2;
+    repeated GrowthRecord raw_results = 3;
+}
+
+message ErrorResponse {
+    // default: false
+    bool status = 1;
+    string message = 2;
+}
+
+
+message ResponseData {
+    string from = 1;
+    string to = 2;
+    repeated ResponseMarketData market_data= 3;
+}
+    
+message ResponseMarketData {
+    string market_pair = 1;
+    GrowthData growth_data = 2;
+}

@@ -1,2 +1,4 @@
-# peaq-challenge-ebikade
-Theory and Coding Challenge Senior Backend Developer
+# peaq-challenge
+Peaq interview test challenge
+
+## Please check each folder README file for docs and answers to challenge.

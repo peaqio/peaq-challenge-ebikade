@@ -1,0 +1,82 @@
+syntax = "proto3";
+option go_package="github.com/ebikode/peaq-challenge/challenge-3/exchange/proto/rate;rate";
+package rate;
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+import "rate.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = { 
+  info: {
+    title: "Peaq Challenge API DOc"
+    description: "Analytics of Cryto-Currency Exchange Rates"
+    version: "1.0"
+    contact: {
+      name: "Iredia"
+      url: "https://github.com/ebikode/peaq-challenge"
+      email: "sammyrogers2010@gmail.com"
+    }
+  }
+  schemes: HTTPS
+  schemes: HTTP
+  consumes: "application/json"
+  produces: "application/json"
+  responses: {
+    key: "404"
+    value: {
+      description: "Returned when the resource does not exist."
+      schema: {
+        json_schema: {
+          type: STRING
+        }
+      }
+    }
+  }
+  responses: {
+    key: "400"
+    value: {
+      description: "Returned when the user does not send a valid request."
+      schema: {
+        json_schema: {
+          ref: ".rate.ErrorResponse"
+        }
+      }
+    }
+  }
+};
+
+
+service ServerService {
+    // Fetch Growth Records
+    // 
+    // Fetch all Growth record data saved in five minutes interval
+    rpc GetGrowthRecords(ServerRequest) returns (Response){
+      option (google.api.http) = {
+            get: "/export/analytics"
+        };
+      option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        tags: "Analytics"
+      };
+    };
+    // Fetch Raw Growth Records
+    // 
+    // Fetch all Raw Growth record data saved in five minutes interval
+    rpc GetRawGrowthRecords(ServerRequest) returns (RawResponse){
+      option (google.api.http) = {
+            get: "/export/analytics/raw"
+        };
+      option (grpc.gateway.protoc_gen_swagger.options.openapiv2_operation) = {
+        tags: "Analytics"
+      };
+    };
+}
+
+// Created a blank get request
+message ServerRequest {
+    // from={yyyy-mm-ddThh:mm:ss}
+    string from = 1;
+    // to={yyyy-mm-ddThh:mm:ss}
+    string to = 2;
+    // format=json
+    string format = 3;
+}
